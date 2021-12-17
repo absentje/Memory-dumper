@@ -15,5 +15,4 @@ protected:
 using MemoryDumperPtr = std::shared_ptr<MemoryDumper>;
 
 MemoryDumperPtr makeMemoryDumper( const std::string& dumper_name );
-
 } // namespace MemoryLeaksDetection

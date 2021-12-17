@@ -34,13 +34,16 @@ public:
   }
   virtual ~MsvcMemoryDumper() override
   {
-    std::cout << "========================================================\n";
-    std::cout << "MemoryDumper: " << dumper_name_ << std::endl;
-    std::cout << "========================================================\n";
     _CrtMemCheckpoint(&s2);
     _CrtMemDifference( &s3, &s1, &s2 );
-    _CrtMemDumpStatistics( &s3 );
-    std::cout << "========================================================\n\n";
+    if ( bool have_diff = (s3.lTotalCount > 0) )
+    {
+      std::cout << "========================================================\n";
+      std::cout << "MemoryDumper: " << dumper_name_ << std::endl;
+      std::cout << "========================================================\n";
+      _CrtMemDumpStatistics( &s3 );
+      std::cout << "========================================================\n\n";
+    }
   }
 private:
   _CrtMemState s1 = {}, s2 = {}, s3 = {};
